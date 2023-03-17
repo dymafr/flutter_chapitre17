@@ -129,7 +129,6 @@ class _ActivityFormState extends State<ActivityForm> {
         context,
         listen: false,
       );
-      form.validate();
       _formKey.currentState!.save();
       setState(() => _isLoading = true);
       _nameInputAsync = await cityProvider.verifyIfActivityNameIsUnique(

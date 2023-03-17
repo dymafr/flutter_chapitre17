@@ -7,7 +7,8 @@ import '../models/trip_model.dart';
 import 'package:http/http.dart' as http;
 
 class TripProvider extends ChangeNotifier {
-  final String host = 'localhost';
+  // final String host = '10.0.2.2'; // version emulateur
+  final String host = 'localhost'; // version web
   List<Trip> _trips = [];
   bool isLoading = false;
 
@@ -55,7 +56,7 @@ class TripProvider extends ChangeNotifier {
   Future<void> updateTrip(Trip trip, String activityId) async {
     try {
       Activity activity =
-      trip.activities.firstWhere((activity) => activity.id == activityId);
+          trip.activities.firstWhere((activity) => activity.id == activityId);
       activity.status = ActivityStatus.done;
       http.Response response = await http.put(
         Uri.http(host, '/api/trip'),
@@ -78,7 +79,8 @@ class TripProvider extends ChangeNotifier {
     return trips.firstWhere((trip) => trip.id == id);
   }
 
-  Activity getActivityByIds({required String activityId, required String tripId}) {
+  Activity getActivityByIds(
+      {required String activityId, required String tripId}) {
     return getById(tripId)
         .activities
         .firstWhere((activity) => activity.id == activityId);

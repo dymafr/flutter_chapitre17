@@ -24,7 +24,8 @@ app.use(cors());
 mongoose.set('debug', true);
 mongoose
   .connect(
-    'mongodb+srv://jean:123@cluster0-urpjt.gcp.mongodb.net/dymatrip?retryWrites=true&w=majority'
+    'mongodb+srv://jean:123@cluster0-urpjt.gcp.mongodb.net/dymatrip?retryWrites=true&w=majority' // version web
+    // 'mongodb+srv://jean:123@cluster0-urpjt.gcp.mongodb.net/dymatrip_emu?retryWrites=true&w=majority' // version avec emulateur
   )
   .then(() => console.log('connexion ok !'));
 
@@ -111,7 +112,8 @@ app.get(
 // upload activity image
 app.post('/api/activity/image', upload.single('activity'), (req, res, next) => {
   try {
-    const publicPath = `http://localhost/public/assets/images/activities/${req.file.originalname}`;
+    // const publicPath = `http://localhost/public/assets/images/activities/${req.file.originalname}`; // version web
+    const publicPath = `http://10.0.2.2/public/assets/images/activities/${req.file.originalname}`; // version emulateur
     res.json(publicPath || 'error');
   } catch (e) {
     next(e);

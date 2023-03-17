@@ -7,15 +7,19 @@ import '../models/place_model.dart';
 const GOOGLE_KEY_API = 'AIzaSyDXpINaJSpMpyBNzDA7Tw4gGFTxma2wKv4';
 
 Uri _queryAutocompleteBuilder(String query) {
-  return Uri.parse('https://maps.googleapis.com/maps/api/place/queryautocomplete/json?&key=$GOOGLE_KEY_API&input=$query');
+  return Uri.parse(
+      'https://maps.googleapis.com/maps/api/place/queryautocomplete/json?&key=$GOOGLE_KEY_API&input=$query');
 }
 
 Uri _queryPlaceDetailsBuilder(String placeId) {
-  return Uri.parse("https://maps.googleapis.com/maps/api/place/details/json?placeid=$placeId&fields=formatted_address,geometry&key=$GOOGLE_KEY_API");
+  return Uri.parse(
+      "https://maps.googleapis.com/maps/api/place/details/json?placeid=$placeId&fields=formatted_address,geometry&key=$GOOGLE_KEY_API");
 }
 
-Uri _queryGetAddressFromLatLngBuilder({required double lat, required double lng}) {
-  return Uri.parse("https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$GOOGLE_KEY_API");
+Uri _queryGetAddressFromLatLngBuilder(
+    {required double lat, required double lng}) {
+  return Uri.parse(
+      "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$GOOGLE_KEY_API");
 }
 
 Future<List<Place>> getAutocompleteSuggestions(String query) async {
@@ -26,10 +30,10 @@ Future<List<Place>> getAutocompleteSuggestions(String query) async {
       return (body['predictions'] as List)
           .map(
             (suggestion) => Place(
-          description: suggestion['description'] ?? '',
-          placeId: suggestion['place_id'] ?? '',
-        ),
-      )
+              description: suggestion['description'] ?? '',
+              placeId: suggestion['place_id'] ?? '',
+            ),
+          )
           .toList();
     } else {
       return [];
@@ -57,10 +61,11 @@ Future<LocationActivity> getPlaceDetailsApi(String placeId) async {
   }
 }
 
-Future<String> getAddressFromLatLng({required double lat, required double lng}) async {
+Future<String> getAddressFromLatLng(
+    {required double lat, required double lng}) async {
   try {
     var response =
-    await http.get(_queryGetAddressFromLatLngBuilder(lat: lat, lng: lng));
+        await http.get(_queryGetAddressFromLatLngBuilder(lat: lat, lng: lng));
     if (response.statusCode == 200) {
       return json.decode(response.body)['results'][0]['formatted_address'];
     } else {

@@ -9,7 +9,8 @@ import 'package:path/path.dart';
 import 'dart:io';
 
 class CityProvider extends ChangeNotifier {
-  final String host = 'localhost';
+  // final String host = '10.0.2.2'; // version emulateur
+  final String host = 'localhost'; // version web
   List<City> _cities = [];
   bool isLoading = false;
 
@@ -23,9 +24,9 @@ class CityProvider extends ChangeNotifier {
         _cities
             .where(
               (city) => city.name.toLowerCase().startsWith(
-            filter.toLowerCase(),
-          ),
-        )
+                    filter.toLowerCase(),
+                  ),
+            )
             .toList(),
       );
 
@@ -72,8 +73,8 @@ class CityProvider extends ChangeNotifier {
       String cityName, String activityName) async {
     try {
       City city = getCityByName(cityName);
-      http.Response response = await http
-          .get(Uri.http(host, '/api/city/${city.id}/activities/verify/$activityName'));
+      http.Response response = await http.get(Uri.http(
+          host, '/api/city/${city.id}/activities/verify/$activityName'));
       if (response.statusCode != 200) {
         return json.decode(response.body);
       } else {
@@ -86,10 +87,8 @@ class CityProvider extends ChangeNotifier {
 
   Future<String> uploadImage(File pickedImage) async {
     try {
-      var request = http.MultipartRequest(
-        "POST",
-        Uri.http(host, '/api/activity/image')
-      );
+      var request =
+          http.MultipartRequest("POST", Uri.http(host, '/api/activity/image'));
       request.files.add(
         http.MultipartFile.fromBytes(
           'activity',

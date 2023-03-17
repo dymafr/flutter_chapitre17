@@ -23,12 +23,15 @@ class _GoogleMapViewState extends State<GoogleMapView> {
   void didChangeDependencies() {
     if (!_isLoaded) {
       var arguments =
-      ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+          ModalRoute.of(context)!.settings.arguments as Map<String, String?>;
       _activity =
           Provider.of<TripProvider>(context, listen: false).getActivityByIds(
-            activityId: arguments['activityId']!,
-            tripId: arguments['tripId']!,
-          );
+        activityId: arguments['activityId']!,
+        tripId: arguments['tripId']!,
+      );
+      if (_activity.location == null) {
+        Navigator.pop(context, null);
+      }
     }
     super.didChangeDependencies();
   }
@@ -48,7 +51,7 @@ class _GoogleMapViewState extends State<GoogleMapView> {
   }
 
   Future<void> _openUrl() async {
-    Uri url =  Uri.parse('google.navigation:q=${_activity.location!.address}');
+    Uri url = Uri.parse('google.navigation:q=${_activity.location!.address}');
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {
