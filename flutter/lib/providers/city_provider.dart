@@ -1,11 +1,15 @@
 import 'dart:collection';
 import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:http_parser/http_parser.dart';
+
 import '../models/activity_model.dart';
 import '../models/city_model.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
+
 import 'dart:io';
 
 class CityProvider extends ChangeNotifier {
@@ -23,9 +27,8 @@ class CityProvider extends ChangeNotifier {
       UnmodifiableListView(
         _cities
             .where(
-              (city) => city.name.toLowerCase().startsWith(
-                    filter.toLowerCase(),
-                  ),
+              (city) =>
+                  city.name.toLowerCase().startsWith(filter.toLowerCase()),
             )
             .toList(),
       );
@@ -53,15 +56,11 @@ class CityProvider extends ChangeNotifier {
       http.Response response = await http.post(
         Uri.http(host, '/api/city/$cityId/activity'),
         headers: {'Content-type': 'application/json'},
-        body: json.encode(
-          newActivity.toJson(),
-        ),
+        body: json.encode(newActivity.toJson()),
       );
       if (response.statusCode == 200) {
         int index = _cities.indexWhere((city) => city.id == cityId);
-        _cities[index] = City.fromJson(
-          json.decode(response.body),
-        );
+        _cities[index] = City.fromJson(json.decode(response.body));
         notifyListeners();
       }
     } catch (e) {
@@ -70,11 +69,14 @@ class CityProvider extends ChangeNotifier {
   }
 
   Future<dynamic> verifyIfActivityNameIsUnique(
-      String cityName, String activityName) async {
+    String cityName,
+    String activityName,
+  ) async {
     try {
       City city = getCityByName(cityName);
-      http.Response response = await http.get(Uri.http(
-          host, '/api/city/${city.id}/activities/verify/$activityName'));
+      http.Response response = await http.get(
+        Uri.http(host, '/api/city/${city.id}/activities/verify/$activityName'),
+      );
       if (response.statusCode != 200) {
         return json.decode(response.body);
       } else {
@@ -87,8 +89,10 @@ class CityProvider extends ChangeNotifier {
 
   Future<String> uploadImage(File pickedImage) async {
     try {
-      var request =
-          http.MultipartRequest("POST", Uri.http(host, '/api/activity/image'));
+      var request = http.MultipartRequest(
+        "POST",
+        Uri.http(host, '/api/activity/image'),
+      );
       request.files.add(
         http.MultipartFile.fromBytes(
           'activity',

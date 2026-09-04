@@ -19,35 +19,27 @@ class CityCard extends StatelessWidget {
             GestureDetector(
               child: Hero(
                 tag: city.name,
-                child: Image.network(
-                  city.image,
-                  fit: BoxFit.cover,
-                ),
+                child: Image.network(city.image, fit: BoxFit.cover),
               ),
               onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  '/city',
-                  arguments: city.name,
-                );
+                Navigator.pushNamed(context, '/city', arguments: city.name);
               },
             ),
             Positioned(
               top: 10,
               left: 10,
               child: Container(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
                 color: Colors.black54,
                 child: Text(
                   city.name,
-                  style: const TextStyle(
-                    fontSize: 35,
-                    color: Colors.white,
-                  ),
+                  style: const TextStyle(fontSize: 35, color: Colors.white),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

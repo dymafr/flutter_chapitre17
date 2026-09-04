@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'widgets/trip_weather.dart';
 import '../../providers/city_provider.dart';
 import 'widgets/trip_activities.dart';
@@ -13,21 +14,23 @@ class TripView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String cityName = (ModalRoute.of(context)!.settings.arguments
-    as Map<String, String>)['cityName']!;
-    final String tripId = (ModalRoute.of(context)!.settings.arguments
-    as Map<String, String>)['tripId']!;
-    final City city = Provider.of<CityProvider>(context, listen: false)
-        .getCityByName(cityName);
+    final String cityName =
+        (ModalRoute.of(context)!.settings.arguments
+            as Map<String, String>)['cityName']!;
+    final String tripId =
+        (ModalRoute.of(context)!.settings.arguments
+            as Map<String, String>)['tripId']!;
+    final City city = Provider.of<CityProvider>(
+      context,
+      listen: false,
+    ).getCityByName(cityName);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            TripCityBar(
-              city: city,
-            ),
+            TripCityBar(city: city),
             TripWeather(cityName: cityName),
-            TripActivities(tripId: tripId)
+            TripActivities(tripId: tripId),
           ],
         ),
       ),

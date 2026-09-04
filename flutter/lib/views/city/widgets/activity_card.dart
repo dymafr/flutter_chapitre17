@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../models/activity_model.dart';
 
 class ActivityCard extends StatelessWidget {
@@ -6,7 +7,8 @@ class ActivityCard extends StatelessWidget {
   final bool isSelected;
   final VoidCallback toggleActivity;
 
-  const ActivityCard({super.key,
+  const ActivityCard({
+    super.key,
     required this.activity,
     required this.isSelected,
     required this.toggleActivity,
@@ -15,54 +17,49 @@ class ActivityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 150,
-        child: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            Ink.image(
-              image: NetworkImage(activity.image),
-              fit: BoxFit.cover,
-              child: InkWell(
-                onTap: toggleActivity,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        if (isSelected)
-                          const Icon(
-                            Icons.check,
-                            size: 40,
-                            color: Colors.white,
-                          ),
-                      ],
-                    ),
-                  ),
-                  Row(
+      height: 150,
+      child: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          Ink.image(
+            image: NetworkImage(activity.image),
+            fit: BoxFit.cover,
+            child: InkWell(onTap: toggleActivity),
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Flexible(
-                        child: FittedBox(
-                          child: Text(
-                            activity.name,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                            ),
+                      if (isSelected)
+                        const Icon(Icons.check, size: 40, color: Colors.white),
+                    ],
+                  ),
+                ),
+                Row(
+                  children: <Widget>[
+                    Flexible(
+                      child: FittedBox(
+                        child: Text(
+                          activity.name,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
-        ));
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

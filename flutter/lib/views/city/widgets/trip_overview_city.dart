@@ -4,7 +4,11 @@ class TripOverviewCity extends StatelessWidget {
   final String cityName;
   final String cityImage;
 
-  const TripOverviewCity({super.key, required this.cityName, required this.cityImage});
+  const TripOverviewCity({
+    super.key,
+    required this.cityName,
+    required this.cityImage,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +20,7 @@ class TripOverviewCity extends StatelessWidget {
         children: <Widget>[
           Hero(
             tag: cityName,
-            child: Image.network(
-              cityImage,
-              fit: BoxFit.cover,
-            ),
+            child: Image.network(cityImage, fit: BoxFit.cover),
           ),
           Container(
             color: Colors.black45,
@@ -33,7 +34,7 @@ class TripOverviewCity extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

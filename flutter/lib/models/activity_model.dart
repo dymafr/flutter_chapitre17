@@ -19,18 +19,19 @@ class Activity {
   });
 
   Activity.fromJson(Map<String, dynamic> json)
-      : id = json['_id'],
-        name = json['name'],
-        image = json['image'],
-        city = json['city'],
-        price = json['price'].toDouble(),
-        location = LocationActivity(
-          address: json['address'],
-          latitude: json['latitude'],
-          longitude: json['longitude'],
-        ),
-        status =
-        json['status'] == 0 ? ActivityStatus.ongoing : ActivityStatus.done;
+    : id = json['_id'],
+      name = json['name'],
+      image = json['image'],
+      city = json['city'],
+      price = json['price'].toDouble(),
+      location = LocationActivity(
+        address: json['address'],
+        latitude: json['latitude'],
+        longitude: json['longitude'],
+      ),
+      status = json['status'] == 0
+          ? ActivityStatus.ongoing
+          : ActivityStatus.done;
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> value = {
@@ -41,7 +42,7 @@ class Activity {
       'address': location?.address,
       'longitude': location?.longitude,
       'latitude': location?.latitude,
-      'status': status == ActivityStatus.ongoing ? 0 : 1
+      'status': status == ActivityStatus.ongoing ? 0 : 1,
     };
     if (id != null) {
       value['_id'] = id;
@@ -54,9 +55,5 @@ class LocationActivity {
   String? address;
   double? longitude;
   double? latitude;
-  LocationActivity({
-    this.address,
-    this.longitude,
-    this.latitude,
-  });
+  LocationActivity({this.address, this.longitude, this.latitude});
 }

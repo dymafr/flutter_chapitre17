@@ -30,11 +30,13 @@ List<Trip> trips = [
     date: DateTime.now().add(const Duration(days: 1)),
   ),
   Trip(
-      activities: [],
-      city: 'Lyon',
-      date: DateTime.now().add(const Duration(days: 2))),
+    activities: [],
+    city: 'Lyon',
+    date: DateTime.now().add(const Duration(days: 2)),
+  ),
   Trip(
-      activities: [],
-      city: 'Nice',
-      date: DateTime.now().subtract(const Duration(days: 1))),
+    activities: [],
+    city: 'Nice',
+    date: DateTime.now().subtract(const Duration(days: 1)),
+  ),
 ];

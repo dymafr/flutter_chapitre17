@@ -25,8 +25,10 @@ class _ActivityFormImagePickerState extends State<ActivityFormImagePicker> {
       XFile? pickedFile = await picker.pickImage(source: source);
       if (pickedFile != null && mounted) {
         _deviceImage = File(pickedFile.path);
-        final url = await Provider.of<CityProvider>(context, listen: false)
-            .uploadImage(_deviceImage!);
+        final url = await Provider.of<CityProvider>(
+          context,
+          listen: false,
+        ).uploadImage(_deviceImage!);
         widget.updateUrl(url);
         setState(() {});
       } else {}
@@ -57,12 +59,9 @@ class _ActivityFormImagePickerState extends State<ActivityFormImagePicker> {
         SizedBox(
           width: double.infinity,
           child: _deviceImage != null
-              ? Image.file(
-            _deviceImage!,
-            fit: BoxFit.cover,
-          )
+              ? Image.file(_deviceImage!, fit: BoxFit.cover)
               : const Text('Aucune image'),
-        )
+        ),
       ],
     );
   }

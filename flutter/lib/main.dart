@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'providers/trip_provider.dart';
 import 'providers/city_provider.dart';
 import 'views/city/city_view.dart';
@@ -10,7 +11,7 @@ import 'views/activity_form/activity_form_view.dart';
 import 'views/google_map/google_map_view.dart';
 import './views/home/home_view.dart';
 
-main() {
+void main() {
   runApp(const DymaTrip());
 }
 
@@ -40,6 +41,13 @@ class _DymaTripState extends State<DymaTrip> {
         ChangeNotifierProvider.value(value: tripProvider),
       ],
       child: MaterialApp(
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.blue,
+            foregroundColor: Colors.white,
+          ),
+        ),
         debugShowCheckedModeBanner: false,
         routes: {
           '/': (_) => const HomeView(),
@@ -49,9 +57,8 @@ class _DymaTripState extends State<DymaTrip> {
           ActivityFormView.routeName: (_) => const ActivityFormView(),
           GoogleMapView.routeName: (_) => const GoogleMapView(),
         },
-        onUnknownRoute: (_) => MaterialPageRoute(
-          builder: (_) => const NotFound(),
-        ),
+        onUnknownRoute: (_) =>
+            MaterialPageRoute(builder: (_) => const NotFound()),
       ),
     );
   }

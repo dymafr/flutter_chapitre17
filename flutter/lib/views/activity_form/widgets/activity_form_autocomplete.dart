@@ -7,10 +7,7 @@ import '../../../models/activity_model.dart';
 import '../../../models/place_model.dart';
 
 Future showInputAutocomplete(BuildContext context) {
-  return showDialog(
-    context: context,
-    builder: (_) => const InputAddress(),
-  );
+  return showDialog(context: context, builder: (_) => const InputAddress());
 }
 
 class InputAddress extends StatefulWidget {
@@ -70,7 +67,7 @@ class _InputAddressState extends State<InputAddress> {
                   icon: const Icon(Icons.clear),
                   onPressed: () => Navigator.pop(context, null),
                 ),
-              )
+              ),
             ],
           ),
           Expanded(
@@ -85,7 +82,7 @@ class _InputAddressState extends State<InputAddress> {
                 );
               },
             ),
-          )
+          ),
         ],
       ),
     );

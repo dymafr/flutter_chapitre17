@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../models/city_model.dart';
 
 class TripCityBar extends StatelessWidget {
@@ -14,16 +15,10 @@ class TripCityBar extends StatelessWidget {
         fit: StackFit.expand,
         alignment: Alignment.center,
         children: <Widget>[
-          Image.network(
-            city.image,
-            fit: BoxFit.cover,
-          ),
+          Image.network(city.image, fit: BoxFit.cover),
           Container(
             color: Colors.black38,
-            padding: const EdgeInsets.symmetric(
-              vertical: 30,
-              horizontal: 10,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
             child: Column(
               children: <Widget>[
                 Row(
@@ -42,16 +37,13 @@ class TripCityBar extends StatelessWidget {
                   child: Center(
                     child: Text(
                       city.name,
-                      style: const TextStyle(
-                        fontSize: 30,
-                        color: Colors.white,
-                      ),
+                      style: const TextStyle(fontSize: 30, color: Colors.white),
                     ),
                   ),
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

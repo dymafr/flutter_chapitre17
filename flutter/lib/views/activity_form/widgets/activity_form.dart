@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../apis/google_api.dart';
 import '../../../models/activity_model.dart';
 import '../../../providers/city_provider.dart';
 import 'activity_form_autocomplete.dart';
 import 'activity_form_image_picker.dart';
+
 import 'package:location/location.dart';
 
 class ActivityForm extends StatefulWidget {
@@ -60,8 +62,6 @@ class _ActivityFormState extends State<ActivityForm> {
           });
           _urlFocusNode.requestFocus();
         }
-      } else {
-        print('no focus');
       }
     });
     super.initState();
@@ -97,13 +97,13 @@ class _ActivityFormState extends State<ActivityForm> {
       userLocation = await location.getLocation();
 
       String address = await getAddressFromLatLng(
-        lat: userLocation.latitude!,
-        lng: userLocation.longitude!,
+        lat: userLocation.latitude,
+        lng: userLocation.longitude,
       );
       _newActivity.location = LocationActivity(
         address: address,
-        latitude: userLocation.latitude!,
-        longitude: userLocation.longitude!,
+        latitude: userLocation.latitude,
+        longitude: userLocation.longitude,
       );
       setState(() {
         _addressController.text = address;
@@ -165,23 +165,17 @@ class _ActivityFormState extends State<ActivityForm> {
                 return null;
               },
               textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(
-                labelText: 'Nom',
-              ),
+              decoration: const InputDecoration(labelText: 'Nom'),
               onSaved: (value) => _newActivity.name = value!,
               onFieldSubmitted: (_) =>
                   FocusScope.of(context).requestFocus(_priceFocusNode),
             ),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             TextFormField(
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.next,
               focusNode: _priceFocusNode,
-              decoration: const InputDecoration(
-                hintText: 'Prix',
-              ),
+              decoration: const InputDecoration(hintText: 'Prix'),
               onFieldSubmitted: (_) =>
                   FocusScope.of(context).requestFocus(_urlFocusNode),
               validator: (value) {
@@ -192,15 +186,11 @@ class _ActivityFormState extends State<ActivityForm> {
               },
               onSaved: (value) => _newActivity.price = double.parse(value!),
             ),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             TextFormField(
               focusNode: _addressFocusNode,
               controller: _addressController,
-              decoration: const InputDecoration(
-                hintText: 'Adresse',
-              ),
+              decoration: const InputDecoration(hintText: 'Adresse'),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Remplissez une adresse valide';
@@ -209,17 +199,13 @@ class _ActivityFormState extends State<ActivityForm> {
               },
               onSaved: (value) => _newActivity.location!.address = value!,
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             TextButton.icon(
               icon: const Icon(Icons.gps_fixed),
               label: const Text('Utilisez ma position actuelle'),
               onPressed: _getCurrentLocation,
             ),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             TextFormField(
               keyboardType: TextInputType.url,
               focusNode: _urlFocusNode,
@@ -230,18 +216,12 @@ class _ActivityFormState extends State<ActivityForm> {
                 }
                 return null;
               },
-              decoration: const InputDecoration(
-                hintText: 'Url image',
-              ),
+              decoration: const InputDecoration(hintText: 'Url image'),
               onSaved: (value) => _newActivity.image = value!,
             ),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             ActivityFormImagePicker(updateUrl: updateUrlField),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -254,7 +234,7 @@ class _ActivityFormState extends State<ActivityForm> {
                   child: const Text('sauvegarder'),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

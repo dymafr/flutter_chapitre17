@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'trip_overview_city.dart';
 import '../../../models/trip_model.dart';
 
@@ -10,7 +11,8 @@ class TripOverview extends StatelessWidget {
   final String cityImage;
   final double amount;
 
-  const TripOverview({super.key,
+  const TripOverview({
+    super.key,
     required this.setDate,
     required this.trip,
     required this.cityName,
@@ -26,9 +28,7 @@ class TripOverview extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TripOverviewCity(cityName: cityName, cityImage: cityImage),
-          const SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Row(
@@ -44,13 +44,11 @@ class TripOverview extends StatelessWidget {
                 ElevatedButton(
                   onPressed: setDate,
                   child: const Text('Sélectionner une date'),
-                )
+                ),
               ],
             ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Row(
@@ -71,9 +69,7 @@ class TripOverview extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
         ],
       ),
     );

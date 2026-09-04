@@ -1,25 +1,31 @@
 import 'package:http/http.dart' as http;
+
 import 'dart:convert';
 
 import '../models/activity_model.dart';
 import '../models/place_model.dart';
 
-const GOOGLE_KEY_API = 'AIzaSyDXpINaJSpMpyBNzDA7Tw4gGFTxma2wKv4';
+const googleApiKey = ''; // Mettre votre clé d'API Google Cloud
 
 Uri _queryAutocompleteBuilder(String query) {
   return Uri.parse(
-      'https://maps.googleapis.com/maps/api/place/queryautocomplete/json?&key=$GOOGLE_KEY_API&input=$query');
+    'https://maps.googleapis.com/maps/api/place/queryautocomplete/json?&key=$googleApiKey&input=$query',
+  );
 }
 
 Uri _queryPlaceDetailsBuilder(String placeId) {
   return Uri.parse(
-      "https://maps.googleapis.com/maps/api/place/details/json?placeid=$placeId&fields=formatted_address,geometry&key=$GOOGLE_KEY_API");
+    "https://maps.googleapis.com/maps/api/place/details/json?placeid=$placeId&fields=formatted_address,geometry&key=$googleApiKey",
+  );
 }
 
-Uri _queryGetAddressFromLatLngBuilder(
-    {required double lat, required double lng}) {
+Uri _queryGetAddressFromLatLngBuilder({
+  required double lat,
+  required double lng,
+}) {
   return Uri.parse(
-      "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$GOOGLE_KEY_API");
+    "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$googleApiKey",
+  );
 }
 
 Future<List<Place>> getAutocompleteSuggestions(String query) async {
@@ -61,11 +67,14 @@ Future<LocationActivity> getPlaceDetailsApi(String placeId) async {
   }
 }
 
-Future<String> getAddressFromLatLng(
-    {required double lat, required double lng}) async {
+Future<String> getAddressFromLatLng({
+  required double lat,
+  required double lng,
+}) async {
   try {
-    var response =
-        await http.get(_queryGetAddressFromLatLngBuilder(lat: lat, lng: lng));
+    var response = await http.get(
+      _queryGetAddressFromLatLngBuilder(lat: lat, lng: lng),
+    );
     if (response.statusCode == 200) {
       return json.decode(response.body)['results'][0]['formatted_address'];
     } else {

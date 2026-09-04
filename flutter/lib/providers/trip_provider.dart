@@ -1,9 +1,12 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
+
 import '../models/activity_model.dart';
 import '../models/trip_model.dart';
+
 import 'package:http/http.dart' as http;
 
 class TripProvider extends ChangeNotifier {
@@ -35,17 +38,11 @@ class TripProvider extends ChangeNotifier {
     try {
       http.Response response = await http.post(
         Uri.http(host, '/api/trip'),
-        body: json.encode(
-          trip.toJson(),
-        ),
+        body: json.encode(trip.toJson()),
         headers: {'Content-type': 'application/json'},
       );
       if (response.statusCode == 200) {
-        _trips.add(
-          Trip.fromJson(
-            json.decode(response.body),
-          ),
-        );
+        _trips.add(Trip.fromJson(json.decode(response.body)));
         notifyListeners();
       }
     } catch (e) {
@@ -55,14 +52,13 @@ class TripProvider extends ChangeNotifier {
 
   Future<void> updateTrip(Trip trip, String activityId) async {
     try {
-      Activity activity =
-          trip.activities.firstWhere((activity) => activity.id == activityId);
+      Activity activity = trip.activities.firstWhere(
+        (activity) => activity.id == activityId,
+      );
       activity.status = ActivityStatus.done;
       http.Response response = await http.put(
         Uri.http(host, '/api/trip'),
-        body: json.encode(
-          trip.toJson(),
-        ),
+        body: json.encode(trip.toJson()),
         headers: {'Content-type': 'application/json'},
       );
       if (response.statusCode != 200) {
@@ -79,10 +75,11 @@ class TripProvider extends ChangeNotifier {
     return trips.firstWhere((trip) => trip.id == id);
   }
 
-  Activity getActivityByIds(
-      {required String activityId, required String tripId}) {
-    return getById(tripId)
-        .activities
+  Activity getActivityByIds({
+    required String activityId,
+    required String tripId,
+  }) {
+    return getById(tripId).activities
         .firstWhere((activity) => activity.id == activityId);
   }
 }
